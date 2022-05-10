@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "Google Index",
+    "description": "This extention mimics the console API ",
+    "version": "1.0",
+    "permissions": ["storage"],
+    "action": {
+        "default_title": "",
+        "default_icon": "static/csv.png",
+        "default_popup": "popup.html"
+      }
+    
+}
