@@ -3,18 +3,22 @@ import './App.css';
 import Button from './components/button';
 import Table from './components/table';
 
+
+const MAX_COUNT = 400;
 function App() {
   
   const [message, setMessage] = useState("");
   const [url, setURL] = useState([]);
+  const [jsonData, setJSON] = useState({});
+  const [btn, setBtn] = useState("start");
 
-  useEffect(()=> {
+  useEffect(()=> { 
     document.title ="Google Console Extention"
   })
 
-  const handleInput = (event) => {
-    const urlList = [...url];
+  const handleUpload = (event) => {
     const files = event.target.files;
+    let  urlList = [...url];
     setMessage(`${files.length} file uploaded`)
     for (let file of event.target.files) {
       let reader = new FileReader();
@@ -23,16 +27,80 @@ function App() {
       reader.onload = (ev) => {
         ev.target.result
           .split(/\r\n|\n/)
-          .forEach(line => urlList.push(line));
+          .forEach(line =>urlList.push(line));
+
+      if (urlList.length >= MAX_COUNT) {
+        setMessage(`Attempting ${urlList.length} urls, Daily threshold ${MAX_COUNT}`)
+        return
+      } else {
+        console.log(urlList)
+        setURL(urlList);
+        console.log(url.length, urlList.length)
+        setMessage(`${urlList.length} url found`);
+      }
       }
 
       reader.onerror = (event) => {
         alert(event.target.error.name);
       };
     }
-    setURL(urlList);
-    setMessage(`${url.length} url found`);
-  
+   
+  }
+
+   
+
+  const handleJSONUpload = (event) => {
+    const file = event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = (ev) => { 
+      console.log(typeof ev.target.result); 
+      try{
+        let json = JSON.parse(ev.target.result);
+        setJSON(json)
+      } catch(e){
+        setMessage(`${e}`)
+      }
+    }
+    reader.onerror = (ev) =>setMessage(`error loading ${event.target.files[0].name}: ${ev}`)
+    
+  }
+
+
+
+  const handleStart = () => {
+    console.log("start");
+    if (url.length === 0 || Object.keys(jsonData).length === 0) { 
+      setMessage("Error: url or jsonFile not uploaded!"); 
+      return;
+    }
+    setMessage("Waiting...");
+    setBtn("Stop");
+    const data = {
+      "url":url, 
+      "json_data": jsonData
+    }
+    console.log("hello")
+    fetch("http://192.168.0.1:5000/", {
+      methods: "GET"
+    }).then(e =>console.log(e))
+    .catch(e=> console.log(e))
+        
+    fetch('http://127.0.0.1:5000/api', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type':'application/json',
+        "Accept": "application/json",
+        // 'Access-Control-Allow-Origin':'*' 
+      },
+      body: JSON.stringify(data)
+      })
+    .then(data => console.log(data))
+    .catch(err => console.log("err",err))
+
+  setBtn("Start");
+    
   }
 
   return (
@@ -40,17 +108,16 @@ function App() {
     <div className="App">
        <div className="BoxFiles">
         <label htmlFor="upload">Url File: </label>
-        <input type="file" id="upload" name="upload" multiple="multiple" onChange={handleInput} /> 
-        <label for="upload">Json Directory</label>
-        <input type="file" id="uploadJson" directory="" webkitdirectory="" />
-        <div className="Message"> {message} </div>
+        <input type="file" id="upload" name="upload" multiple="multiple" onChange={handleUpload} /> 
+        <label htmlFor="upload">Json Directory</label>
+        <input type="file" id="uploadJson" onChange={handleJSONUpload} />
       </div>
-      <div className="BoxButtons">
-        <button id="stop"  >Stop Process</button>
-        <button id="start" >Start</button>
-      </div>
+      <div className='BoxMessage'> {message} </div>
       <div className="BoxTable"> 
         <Table />
+      </div>
+      <div className="BoxButtons">
+        <Button id="start"  name={btn}  onClick={handleStart}/>
       </div>
       <div className="right">
         <label htmlFor="num"> number of API connections </label>

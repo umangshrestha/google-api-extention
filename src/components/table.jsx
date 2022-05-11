@@ -2,14 +2,14 @@ import './table.css';
 
 const Table = (props) => (
     <table>
-    <tbody>
-        <th>#</th>
-        <th>Key Phrase</th>
-        <th>Time</th>
-        <th>Status</th>
-    </tbody>   
-    <tbody>  
-    </tbody>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Key Phrase</th>
+            <th>Time</th>
+            <th>Status</th>
+        </tr>
+        </thead>   
     </table>
 )
 

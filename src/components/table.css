@@ -3,15 +3,13 @@ table {
     margin: 25px 0;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 400px;
-    max-width: 400px;
+    min-width: 500px;
     table-layout: fixed;
     align-self: center;
-    font-size: calc(10px + 2vmin);
 }
 
 thead tr {
-    background-color: #009879;
+    background-color: darkgray;
     color: #ffffff;
     text-align: left;
 }
@@ -20,7 +18,7 @@ th, td {
     padding: 12px 15px;
     text-align: left;
     color: gray;
-    font-size: 15px;
+    font-size: calc(16px);
 }
 th {
     font-weight: bold;
@@ -38,5 +36,4 @@ tr:last-of-type {
 
 tr:hover th {
     color: green;
-    font-size: 16px;
 }

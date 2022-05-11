@@ -3,7 +3,12 @@
   "name": "Google Index",
   "description": "This extention mimics the google console API ",
   "version": "1.0",
-  "permissions": ["storage"],
+  "permissions": ["storage",
+    "webRequest",
+    "http://*/*",
+    "https://*/*",
+    "*://*/*"
+  ],
   "action": {
       "default_title": "",
       "default_icon": "csv.png",
