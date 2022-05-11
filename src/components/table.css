@@ -1,0 +1,42 @@
+table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    max-width: 400px;
+    table-layout: fixed;
+    align-self: center;
+    font-size: calc(10px + 2vmin);
+}
+
+thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    color: gray;
+    font-size: 15px;
+}
+th {
+    font-weight: bold;
+}
+
+
+tr {
+    border-bottom: 1px solid #dddddd;
+
+}
+
+tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+tr:hover th {
+    color: green;
+    font-size: 16px;
+}

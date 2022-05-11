@@ -1,36 +1,60 @@
 .App {
-  text-align: center;
+  text-align: left;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 100px;
+  background-color: lightgray;
+  min-height: 80vh;
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.BoxFiles {
+  justify-content: left;
+  grid-column: 1/4;
+  grid-row: 1/4;
+  font-size: calc(10px + 2vmin);
+  display: flex;
+  flex-direction: column;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.BoxButtons {
+  justify-content: left;
+  grid-column:2 ;
+  grid-row: 1;
+  font-size: calc(10px + 2vmin);
+  display: flex;
+  flex-direction: row;
 }
 
-input[type=text] {
-  width: 40%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  font-size:14px;
-  font-weight: 100;
+.BoxTable {
+  grid-column:1 ;
+  grid-row: 3;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.right{
+  background-color: white;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: black;
+  grid-column: 3;
+  grid-row: 1;
+}
+
+
+.col{
+  background-color: white;
+  display: flex;
+  flex-direction: left;
+  align-items: left;
+  justify-content: left;
+  text-align: left;
+  font-weight:  bold;
+  color: black;
 }
 
 .App-link {
@@ -44,4 +68,12 @@ input[type=text] {
   to {
     transform: rotate(360deg);
   }
+}
+
+
+
+
+.Message {
+  background-color:tomato;
+  font-weight: bold;
 }
