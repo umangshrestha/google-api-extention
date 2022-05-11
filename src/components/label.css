@@ -10,5 +10,5 @@ input[type=text] {
 
 
 input[type="file"] {
-    border-radius: 8px;
+    font-size:20px;
 }

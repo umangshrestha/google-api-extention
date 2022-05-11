@@ -5,19 +5,18 @@
   "version": "1.0",
   "permissions": [
     "storage",
-    "webRequest"
+    "webRequest",
+    "tabs"
   ],
   "host_permissions":[
     "*://*/*"
   ],
+
   "action": {
       "default_title": "",
       "default_icon": "csv.png",
-      "default_popup": "index.html"
+      "default_popup": "popup.html"
     },
-    "chrome_url_overrides": {
-      "newtab": "index.html"
-   },
     "content_security_policy": {
       "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://music.yandex.ru/;"
   }}

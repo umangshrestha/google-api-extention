@@ -7,10 +7,10 @@ Button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
     border-radius: 8px;
-    height: 55px;
+    height: 60px;
     width: 155px;
     margin: 4px 2px;
     cursor: pointer;
+    font-size:20px;
   }

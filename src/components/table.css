@@ -2,7 +2,7 @@ table {
     border-collapse: collapse;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 520px;
+    min-width: 80em;
     max-width: 520px;
     min-height: 1   0vh;
     max-height: 10vh;
@@ -21,7 +21,7 @@ th {
     padding: 12px 15px;
     text-align: left;
     color: black;
-    font-size: calc(16px);
+    font-size: calc(22px);
     font-weight: bold;
 
 }
@@ -30,16 +30,16 @@ td {
     padding: 12px 15px;
     text-align: left;
     color: gray;
-    font-size: calc(12px);
     max-width: 40px;
+    font-size:20px;
     overflow-x: hidden;
 
 }
 
 tr {
     border-bottom: 1px solid #dddddd;
-    font-size: 16px;
     border-radius: 8px;
+    font-size:20px;
 }
 
 
