@@ -1,3 +1,4 @@
+from urllib import response
 from oauth2client.service_account import ServiceAccountCredentials
 import httplib2
 from flask import Flask, current_app, g, request, Response
@@ -9,7 +10,7 @@ from csv import writer
 import os
 import threading
 from flask_cors import CORS, cross_origin
-
+from flask import Flask, request, jsonify, make_response
 
 
 SCOPES = ["https://www.googleapis.com/auth/indexing"]
@@ -22,37 +23,35 @@ CURRENT_INDEX = 0
 CREDENTIAL_LIST = []
 
 app= Flask(__name__)
-CORS(app)
-app.config["CORS_HEADERS"] = "Content-Type"
-
+CORS(app, resources={ r"*": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route('/')
-@cross_origin() 
 def hello():
     """ Displays the index page accessible at '/'
     """
-    header = response.headers
-    header['Access-Control-Allow-Origin'] = '*'
-  
-    return "hello"
+    print("-----------------")
+    response =  jsonify({"Message": "Hello"})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
-@app.route('/api', methods=["POST"])
-@cross_origin() 
+@app.route('/api', methods=["POST", "GET"], strict_slashes=False)
 def index():
-        header = response.headers
-        header['Access-Control-Allow-Origin'] = '*'
+    ob = Credential()
+    url = request.json["url"]
+    json_key = request.json["json_data"]
+    write_json(json_key)
+    ob.process_url("temp.json",url)
+    response = jsonify({"status": 1})
+    response.headers.add('Access-Control-Allow-Origin', '*')
 
-        ob = Credential()
-        print(request.form)
-        url = request.form["url"]
-        json_key = request.form.get("json_key")
-        print(json_key)
-        write_json(json_key)
-        response = ob.process_url("temp.json",url)
-        return response
+    return response
    
+
+
+
 def write_json(json_data):
     with open("temp.json", "w") as f:
-        f.write(json_data)
+        f.write(json.dumps(json_data))
         
 class Credential:
     def _init_(self):
@@ -74,6 +73,8 @@ class Credential:
             except:
                 response = httplib2.Response({'status': -1})
         return response
+
+
 if __name__ == '__main__':
     app.debug=True
     app.run(port=5000)

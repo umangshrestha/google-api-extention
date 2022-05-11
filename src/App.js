@@ -66,7 +66,18 @@ function App() {
     
   }
 
-
+  // fetch("http://127.0.0.1:5000/", {
+  //   methods: "GET",
+  //   headers: {
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/json',
+  //     'Access-Control-Allow-Origin': '*'
+  //   },
+  // }).then(e => e.json())
+  // .then(e=> console.log("data",e))
+  // .catch(e=> console.log("err",e))
+      
+ 
 
   const handleStart = () => {
     console.log("start");
@@ -80,23 +91,23 @@ function App() {
       "url":url, 
       "json_data": jsonData
     }
-    console.log("hello")
-    fetch("http://192.168.0.1:5000/", {
-      methods: "GET"
-    }).then(e =>console.log(e))
-    .catch(e=> console.log(e))
-        
-    fetch('http://127.0.0.1:5000/api', {
+
+   
+   
+ fetch('http://127.0.0.1:5000/api', {
       method: 'POST',
-      mode: 'cors',
+      body: JSON.stringify(data),
+      mode: "cors",
+      dataType: 'json',
+
       headers: {
-        'Content-Type':'application/json',
-        "Accept": "application/json",
-        // 'Access-Control-Allow-Origin':'*' 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify(data)
       })
-    .then(data => console.log(data))
+    .then(e => e.json())
+    .then(e=> e)
     .catch(err => console.log("err",err))
 
   setBtn("Start");
