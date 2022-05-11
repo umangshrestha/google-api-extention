@@ -11,6 +11,7 @@ function App() {
   const [url, setURL] = useState([]);
   const [jsonData, setJSON] = useState({});
   const [btn, setBtn] = useState("start");
+  const [data, setData] = useState([])
 
   useEffect(()=> { 
     document.title ="Google Console Extention"
@@ -107,9 +108,9 @@ function App() {
       },
       })
     .then(e => e.json())
-    .then(e=> e)
+    .then(e=> setData(e))
     .catch(err => console.log("err",err))
-
+    
   setBtn("Start");
     
   }
@@ -125,7 +126,7 @@ function App() {
       </div>
       <div className='BoxMessage'> {message} </div>
       <div className="BoxTable"> 
-        <Table />
+        <Table details={data}/>
       </div>
       <div className="BoxButtons">
         <Button id="start"  name={btn}  onClick={handleStart}/>
