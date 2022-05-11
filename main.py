@@ -47,19 +47,14 @@ def index():
     response = jsonify(data)
     write_csv(data,"url.csv")
     response.headers.add('Access-Control-Allow-Origin', '*')
-    send_file("url.csv", as_attachment=True, attachment_filename="url.csv")
+    return response
 
-
-@app.route('/get_csv', methods=["POST", "GET"], strict_slashes=False)
+@app.route('/get_csv')
 def get_csv():
-    csv_dir  = "./csv"
     csv_file = "url.csv" 
-    csv_path = os.path.join(csv_dir, csv_file)
-    data = request.get_json()
-    write_csv(data, csv_path)
-    if not os.path.isfile(csv_path):
+    if not os.path.isfile(csv_file):
         return "ERROR: file %s was not found on the server" % csv_file
-    return send_file(csv_path, as_attachment=True, attachment_filename=csv_file)
+    return send_file(csv_file, as_attachment=True, attachment_filename=csv_file)
 
 
 def write_json(json_data):
