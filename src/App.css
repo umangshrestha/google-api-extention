@@ -1,11 +1,13 @@
 .App {
   text-align: left;
   display: grid;
+  align-self: center;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 100px;
   background-color: lightgray;
   min-height: 80vh;
-  max-width: 70vh;
+  max-width: 80vh;
+  overflow: scroll;
 }
 
 .BoxFiles {
@@ -14,7 +16,7 @@
   grid-column: 1;
   grid-row: 1;
   display: flex;
-  max-width: 400px;
+  max-width: 500px;
   flex-direction: column;
 }
 

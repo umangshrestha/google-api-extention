@@ -4,7 +4,7 @@ import Button from './components/button';
 import Table from './components/table';
 
 
-const MAX_COUNT = 400;
+const MAX_COUNT = 200;
 function App() {
   
   const [message, setMessage] = useState("");
@@ -14,7 +14,7 @@ function App() {
   const [data, setData] = useState([])
 
   useEffect(()=> { 
-    document.title ="Google Console Extention"
+    document.title ="Google Index"
   })
 
   const handleUpload = (event) => {
@@ -78,9 +78,18 @@ function App() {
   // .then(e=> console.log("data",e))
   // .catch(e=> console.log("err",e))
       
- 
+  const handleClear = () => {
+    setBtn("start");
+    setData([]);
+    setJSON({});
+    setURL([]);
+    setMessage("");
+  } 
 
   const handleStart = () => {
+    if (btn==="stop") {
+      return
+    }
     console.log("start");
     if (url.length === 0 || Object.keys(jsonData).length === 0) { 
       setMessage("Error: url or jsonFile not uploaded!"); 
@@ -100,7 +109,6 @@ function App() {
       body: JSON.stringify(data),
       mode: "cors",
       dataType: 'json',
-
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -108,13 +116,52 @@ function App() {
       },
       })
     .then(e => e.json())
-    .then(e=> setData(e))
-    .catch(err => console.log("err",err))
-    
-  setBtn("Start");
+    .then(e=> {
+      setBtn("Start");
+      setMessage("done!");
+      setData(e)
+    })
+    .catch(err => {
+      setBtn("Start");
+      setMessage("done!");
+      console.log("err",err)
+    })
+
     
   }
 
+  const handleDownload = () => {
+    if (btn==="stop") {
+      return
+    }
+    setMessage("downloading...");
+    fetch('http://127.0.0.1:5000/get_csv', {
+      method: 'GET',
+      mode: "cors",
+      dataType: 'json',
+      headers: {
+        'Accept': 'application/blob',
+        'Content-Type': 'application/blob',
+        'Access-Control-Allow-Origin': '*'
+      },
+      })
+    .then(e => e.blob())
+    .then(blob => {
+      setBtn("Start");
+      setMessage("done!");
+      var url = window.URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = "filename.csv";
+      document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+      a.click();    
+      a.remove();
+    }).catch(err => {
+      setBtn("Start");
+      setMessage("done!");
+      console.log("err",err)
+    })
+  }
   return (
     
     <div className="App">
@@ -137,8 +184,8 @@ function App() {
         <Button name="Save Settings" />
 
         <h2>Actions and Details</h2>
-        <Button name="Download CSV" label="Download/Export Saved Data"/>
-        <Button name="Delete saved items" id="delete" label="Clean saved keywords data" />
+        <Button name="Download CSV" label="Download/Export Saved Data" onClick={handleDownload}/>
+        <Button name="Delete saved items" id="delete" label="Clean saved keywords data" onClick={handleClear}/>
                       
       </div>
     </div>
