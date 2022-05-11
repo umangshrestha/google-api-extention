@@ -54,8 +54,9 @@ def get_csv():
     csv_file = "url.csv" 
     if not os.path.isfile(csv_file):
         return "ERROR: file %s was not found on the server" % csv_file
-    return send_file(csv_file, as_attachment=True, attachment_filename=csv_file)
-
+    response=send_file(csv_file, as_attachment=True, attachment_filename=csv_file)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 def write_json(json_data):
     with open("temp.json", "w") as f:
