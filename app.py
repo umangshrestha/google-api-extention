@@ -1,5 +1,12 @@
 import requests
 from pprint import pprint
+from urllib import response
+from oauth2client.service_account import ServiceAccountCredentials
+import httplib2
+from datetime import datetime
+import time
+import json
+from threading import Thread
 
 URL = "http://127.0.0.1:8000/api/data/"
 data = requests.get(
@@ -7,6 +14,52 @@ data = requests.get(
     headers={"Content-Type": "application/json"}, 
     data='{"start": 1, "end": 3}').json()
 pprint(data)
+
+
+SCOPES = ["https://www.googleapis.com/auth/indexing"]
+ENDPOINT = "https://indexing.googleapis.com/v3/urlNotifications:publish"
+STATES = ('successfully indexed, wait a while for google to refresh',
+          'failed to be indexed')
+
+class Credential:
+    def _init_(self):
+        self._request_responses = []
+        self._json_key_file = ""
+        self.final_response_list = []
+        self.isHeader = True
+
+    def process_url(self, json_list, url_list):
+        self.final_response_list = []
+        self.index = 0
+        for json_dict in json_list:
+            for url in url_list:
+                if not url:
+                    continue
+                self.index += 1
+                t = Thread(target= self.process, args=(url,json_dict))
+                t.setDaemon(True)
+                t.start()
+        print(self.final_response_list)
+        while(self.index>0):
+            time.sleep(0.05)
+        return self.final_response_list
+
+    def process(self, url, json_dict):
+        body_content = "{url: \"%s\", type: \"URL_UPDATED\"}" % url
+        cred = ServiceAccountCredentials.from_json_keyfile_dict(
+                                                                keyfile_dict=json_dict, 
+                                                                scopes=SCOPES)
+        http = cred.authorize(httplib2.Http())
+        try:
+            response, content = http.request(
+                ENDPOINT, method="POST",body=body_content)
+            print({"url": url, "time": datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), "status":response.status})
+            self.final_response_list.append({"url": url, "time": datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), "status":response.status})
+        except Exception as e:
+            print(e)
+            self.final_response_list.append({"url": url, "time": datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),'status': -1})
+        self.index -=1
+
 
 # output
 {'auth': [{'auth_provider_x509_cert_url': 'https://www.googleapis.com/oauth2/v1/certs',
