@@ -12,7 +12,10 @@ urlpatterns = [
     # upload urls
     path(r'api/url/', UrlPost.as_view()),
     path(r'api/auth/', AuthPost.as_view()),
+    path(r'api/upload/', DataPost.as_view()),
     # get data
     path(r'api/data/', GetData.as_view()),
+    path(r'success/', SuccessData.as_view()),
+    path(r'failure/', FailedData.as_view()),
     path(r'status/<int:pk>', StatusDetail.as_view()),
 ]

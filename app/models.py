@@ -4,6 +4,7 @@ from datetime import datetime
 # Create your models here.
 class Auth(models.Model):
     id = models.AutoField(primary_key=True)
+    name = models.CharField(default="", max_length=20)
     type = models.CharField(max_length=16)
     project_id = models.CharField(max_length=30)
     private_key_id = models.CharField(max_length=50)
@@ -16,7 +17,7 @@ class Auth(models.Model):
     client_x509_cert_url = models.CharField(max_length=250)
 
     def __str__(self): 
-        return self.project_id
+        return self.name
 
 class Url(models.Model):
     id = models.AutoField(primary_key=True)
@@ -26,10 +27,13 @@ class Url(models.Model):
         return self.name
 
 class Status(models.Model):
-    url = models.ForeignKey(Url, on_delete=models.CASCADE)
-    auth = models.ForeignKey(Auth, on_delete=models.CASCADE)
+    date = models.CharField(max_length=14)
+    file_name = models.CharField(default="", max_length=20)
+    url = models.CharField(max_length=150)
     status= models.IntegerField(default=-1)
-    date = models.DateField(default=datetime.now)
 
     def __str__(self):
-        return f"{self.url.url}:{self.status}"
+        return f"{self.url}:{self.file_name}:{self.status}"
+
+
+

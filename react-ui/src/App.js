@@ -26,7 +26,7 @@ import CountTable from './components/countTable';
 import URLTable from './components/urlTable';
 import MissingKey from './settings/header';
 import {useState, useEffect} from 'react';
-import {URL_DEFAULT, URL_GET_DATA, URL_JSON_FILE, URL_UPLOAD_FILE} from './settings/urls';
+import {URL_DEFAULT, URL_GET_DATA, URL_JSON_FILE, URL_UPLOAD_FILE, URL_GET_FAILURE, URL_GET_SUCCESS} from './settings/urls';
 
 const Headers = {
   'Accept': 'application/json',
@@ -106,6 +106,7 @@ function App() {
           if (key !== undefined) {
               return  AddErrorMessage(`KeyError:${key}`, file);
           } 
+          json["name"] = file.name;
           setMessage(`Uploading ${file.name}...`)
           fetch(URL_JSON_FILE, {
             method: 'POST',
@@ -150,12 +151,15 @@ function App() {
             url = URL_GET_DATA
             break;
           case "success":
-            url = URL_UPLOAD_FILE;
+            url = URL_GET_SUCCESS;
+            break;
+          case "failure":
+            url = URL_GET_FAILURE;
             break;
           default:
             break;
       }
-
+      console.log(URL)
       fetch(url, {
         method: 'DELETE',
         mode: "cors",

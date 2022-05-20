@@ -5,7 +5,7 @@ from .models import *
 class AuthSerializer(serializers.ModelSerializer):
     class Meta:
         model = Auth
-        fields = ('id', 'project_id', 'private_key_id')
+        fields = ('id', 'name', 'project_id', 'private_key_id')
 
 class UrlSerializer(serializers.ModelSerializer):
     class Meta:

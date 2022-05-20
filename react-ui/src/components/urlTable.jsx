@@ -1,8 +1,8 @@
 import "./table.css";
 
 const URLTable = (props) => {
-    if (props.data === undefined) return <></>
-
+    if (props.data === undefined || props.data.length === 0)
+     return <div id="table" className="ErrMessage">No data found</div>
 
    const header = Object.keys(props.data[0]);
    return (<table className="urlTable">
