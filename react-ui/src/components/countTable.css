@@ -1,0 +1,52 @@
+table {
+    padding-top: 20em;
+    border-collapse: collapse;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 10px;
+    max-width: 10px;
+    min-height: 1   0vh;
+    max-height: 10vh;
+    overflow-y: scroll;
+    table-layout: fixed;
+    align-self: center;
+}
+
+thead tr {
+    color: #ffffff;
+    text-align: left;
+}
+
+th {
+    padding: 12px 15px;
+    text-align: left;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 2px solid #009879;
+
+
+}
+
+td {
+    padding: 12px 15px;
+    text-align: left;
+    color: lightgoldenrodyellow;
+    max-width: 40px;
+    font-size:16px;
+    overflow-x: hidden;
+
+}
+
+tr {
+    border-radius: 8px;
+    font-size:16px;
+}
+
+
+
+
+
+th:hover  {
+    color: green;
+}

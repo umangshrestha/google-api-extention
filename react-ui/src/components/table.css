@@ -1,0 +1,29 @@
+.urlTable {
+    padding-top: 40em;
+    border-collapse: collapse;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 25em;
+    min-height: 1   0vh;
+    max-height: 10vh;
+    align-self: center;
+    overflow: scroll;
+    table-layout:fixed;
+}
+
+.urlTable th {
+    text-align: center;
+}
+
+.urlTable th, td {
+    padding: 1px;
+    font-size: 20px;
+}
+
+
+.urlTable td {
+    color: lightgoldenrodyellow;
+    text-align: left;
+    border-bottom: 1px solid #009879;
+    padding: 2px;
+}
