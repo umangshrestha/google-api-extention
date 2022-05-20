@@ -1,3 +1,4 @@
+from ast import Constant
 from django.shortcuts import render
 from rest_framework import generics, views, status
 from .serializer import *
@@ -11,7 +12,7 @@ from django.core import serializers
 # for rest framework
 class UrlList(generics.ListAPIView):
     queryset = Url.objects.all()
-    serializer_class = UrlSerializer
+    serializer_class = OnlyUrlSerializer
 
 class AuthList(generics.ListAPIView):
     queryset = Auth.objects.all()
@@ -25,17 +26,27 @@ class StatusList(generics.ListAPIView):
 class UrlPost(views.APIView):
     def post(self, request):
         """ {urls: [....]} """
+        urls = [Url(url=url) for url in request.data["urls"] if not Url.objects.filter(url=url).exists()]
+        if len(urls) == 0:
+            return Response({"status": "success"}, status=status.HTTP_200_OK)
+
         Url.objects.bulk_create(
-            [Url(url=url) for url in request.data["urls"]],
-            len(request.data["urls"]))
+            urls, len(urls))
         return Response({"status": "success"}, status=status.HTTP_200_OK)
+
+    def delete(self, request):
+        Url.objects.all().delete()
+        return Response({"status": "success"}, status=status.HTTP_200_OK)
+
 
 class AuthPost(views.APIView):
     def post(self, request):
-        print(request.data)
         Auth(**request.data).save()
         return Response({"status": "success"}, status=status.HTTP_200_OK)
   
+    def delete(self, request):
+        Auth.objects.all().delete()
+        return Response({"status": "success"}, status=status.HTTP_200_OK)
 
 # for rest framework
 class AuthDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -65,3 +76,15 @@ class GetData(generics.ListAPIView):
            "auth": serialize_auth( start, end),
             "url": serialize_url(start, end),
         }, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        """ returns count of data in db"""
+        return Response({
+            "json": Auth.objects.count(),
+            "url": Url.objects.count(),
+            "processed": Status.objects.count(),
+            "success": Status.objects.filter(status=200).count()
+        },  status=status.HTTP_200_OK)
+
+    def delete(self, request):
+        Status.all().delete()
