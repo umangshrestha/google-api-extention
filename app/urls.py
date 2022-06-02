@@ -1,5 +1,6 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
+from django.shortcuts import redirect
 from .views import *
 
 
@@ -14,8 +15,9 @@ urlpatterns = [
     path(r'api/auth/', AuthPost.as_view()),
     path(r'api/upload/', DataPost.as_view()),
     # get data
+    path(r'api/data/success/', SuccessData.as_view()),
+    path(r'api/data/failure/', FailedData.as_view()),
+
     path(r'api/data/', GetData.as_view()),
-    path(r'success/', SuccessData.as_view()),
-    path(r'failure/', FailedData.as_view()),
-    path(r'status/<int:pk>', StatusDetail.as_view()),
+   path(r'status/<int:pk>', StatusDetail.as_view()),
 ]

@@ -108,12 +108,10 @@ class GetData(generics.ListAPIView):
 class SuccessData(generics.ListAPIView):
     queryset = Status.objects.filter(status=200)
     serializer_class = StatusSerializer
-
+    
     def delete(self, request):
-        print(request)
         Status.objects.filter(status=200).delete()
         return Response({"status": "success"}, status=status.HTTP_200_OK)
-
 
 
 class FailedData(generics.ListAPIView):
@@ -121,9 +119,5 @@ class FailedData(generics.ListAPIView):
     serializer_class = StatusSerializer
 
     def delete(self, request):
-        print(request)
-        Status.objects.filter(status=200).delete()
+        Status.objects.exclude(status=200).delete()
         return Response({"status": "success"}, status=status.HTTP_200_OK)
-
-
-

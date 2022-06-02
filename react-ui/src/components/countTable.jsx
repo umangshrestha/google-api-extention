@@ -9,8 +9,8 @@ const CountTable = (props) => (
                 <th onClick={()=>props.onClick("url")}>Url Count</th>
                 <th onClick={()=>props.onClick("auth")}>Json Count</th>
                 <th onClick={()=>props.onClick("status")}>Processed Count</th>
-                <th onClick={()=>props.onClick("success")}>Success Count</th>   
-                <th onClick={()=>props.onClick("failure")}>Failure Count</th>   
+                <th onClick={()=>props.onClick("api/data/success")}>Success Count</th>   
+                <th onClick={()=>props.onClick("api/data/failure")}>Failure Count</th>   
             </tr>
         </thead>
         <tbody>

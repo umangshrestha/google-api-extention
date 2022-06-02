@@ -7,14 +7,12 @@ from datetime import datetime
 import time
 import json
 from threading import Thread
-import csv
+
 
 URL_GET = "http://0.0.0.0:8000/api/data/"
 URL_POST = "http://0.0.0.0:8000/api/upload/"
 SCOPES = ["https://www.googleapis.com/auth/indexing"]
 ENDPOINT = "https://indexing.googleapis.com/v3/urlNotifications:publish"
-STATES = ('successfully indexed, wait a while for google to refresh',
-          'failed to be indexed')
 
 
 START=0
