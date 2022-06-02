@@ -5,8 +5,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
-### `yarn run build`
-To create the extention pack. Add build folder for extention.
 
 ### `npm start`
 

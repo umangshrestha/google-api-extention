@@ -1,9 +1,10 @@
 table {
+    padding-top: 20em;
     border-collapse: collapse;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 80em;
-    max-width: 520px;
+    min-width: 10px;
+    max-width: 10px;
     min-height: 1   0vh;
     max-height: 10vh;
     overflow-y: scroll;
@@ -12,7 +13,6 @@ table {
 }
 
 thead tr {
-    background-color: darkgray;
     color: #ffffff;
     text-align: left;
 }
@@ -20,34 +20,33 @@ thead tr {
 th {
     padding: 12px 15px;
     text-align: left;
-    color: black;
-    font-size: calc(22px);
+    color: white;
+    font-size: 16px;
     font-weight: bold;
+    border-bottom: 2px solid #009879;
+
 
 }
 
 td {
     padding: 12px 15px;
     text-align: left;
-    color: gray;
+    color: lightgoldenrodyellow;
     max-width: 40px;
-    font-size:20px;
+    font-size:16px;
     overflow-x: hidden;
 
 }
 
 tr {
-    border-bottom: 1px solid #dddddd;
     border-radius: 8px;
-    font-size:20px;
+    font-size:16px;
 }
 
 
 
-tr:last-of-type {
-    border-bottom: 2px solid #009879;
-}
 
-tr:hover th {
+
+th:hover  {
     color: green;
 }
